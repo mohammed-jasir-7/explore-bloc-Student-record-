@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:week_5/Database/db_functions.dart';
-import 'package:week_5/Model/users.dart';
-import 'package:week_5/Screens/Home/home_screen.dart';
+import '../../../../data/Model/users.dart';
+import '../../Home/home_screen.dart';
 
 class LoginForm extends StatelessWidget {
   LoginForm({super.key});
@@ -14,7 +14,7 @@ class LoginForm extends StatelessWidget {
     return Material(
       color: Colors.amber,
       child: Container(
-        color: Color.fromARGB(255, 50, 50, 50),
+        color: const Color.fromARGB(255, 50, 50, 50),
         child: SafeArea(
           child: Form(
             child: Padding(
@@ -38,15 +38,15 @@ class LoginForm extends StatelessWidget {
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(35),
-                            borderSide: BorderSide(color: Colors.white)),
+                            borderSide: const BorderSide(color: Colors.white)),
                         border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.white, width: 3),
+                                const BorderSide(color: Colors.white, width: 3),
                             borderRadius: BorderRadius.circular(30)),
                         hintText: "UserName",
-                        hintStyle: TextStyle(color: Colors.white)),
+                        hintStyle: const TextStyle(color: Colors.white)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextFormField(
@@ -55,19 +55,19 @@ class LoginForm extends StatelessWidget {
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(35),
-                            borderSide: BorderSide(color: Colors.white)),
+                            borderSide: const BorderSide(color: Colors.white)),
                         border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.white, width: 3),
+                                const BorderSide(color: Colors.white, width: 3),
                             borderRadius: BorderRadius.circular(30)),
                         hintText: "password",
-                        hintStyle: TextStyle(color: Colors.white)),
+                        hintStyle: const TextStyle(color: Colors.white)),
                   ),
                   ElevatedButton(
                       onPressed: () {
                         validateData(context);
                       },
-                      child: Text("login"))
+                      child: const Text("login"))
                 ],
               ),
             ),

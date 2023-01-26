@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:week_5/Database/student_db_function.dart';
-import 'package:week_5/Model/students.dart';
-import 'package:week_5/Screens/Home/widgets/bodylist.dart';
+import 'package:week_5/business_logic/blocs/bloc/student_bloc.dart';
 
-import 'package:week_5/Screens/Home/widgets/drawer.dart';
-import 'package:week_5/Screens/Home/widgets/searchbar.dart';
-import 'package:week_5/Screens/Login/widget/loginForm.dart';
+import 'package:week_5/presentation/Screens/Home/widgets/bodylist.dart';
+import 'package:week_5/presentation/Screens/Home/widgets/drawer.dart';
+import 'package:week_5/presentation/Screens/Home/widgets/searchbar.dart';
+import '../../../data/Model/students.dart';
+import '../Login/widget/loginForm.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key, required String username});
@@ -15,16 +17,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerSide(),
+      drawer: const DrawerSide(),
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 58, 58, 58),
+        backgroundColor: const Color.fromARGB(255, 58, 58, 58),
         actions: [
-          Searchbar(),
+          const Searchbar(),
           TextButton(
             onPressed: () {
               addscreen(context);
             },
-            child: Text(
+            child: const Text(
               "ADD",
               style: TextStyle(color: Colors.amber),
             ),
@@ -33,7 +35,7 @@ class HomeScreen extends StatelessWidget {
         leading: Builder(
           builder: (contex) {
             return IconButton(
-              icon: Icon(Icons.menu),
+              icon: const Icon(Icons.menu),
               onPressed: () {
                 Scaffold.of(contex).openDrawer();
               },
@@ -49,32 +51,37 @@ class HomeScreen extends StatelessWidget {
     showDialog(
       context: contex,
       builder: (context) => AlertDialog(
-        content: Container(
+        content: SizedBox(
           height: 300,
           child: Column(
             children: [
-              Text("Student Form"),
+              const Text("Student Form"),
               Form(
                   child: Column(
                 children: [
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: addno,
-                    decoration: InputDecoration(labelText: 'Admission No'),
+                    decoration:
+                        const InputDecoration(labelText: 'Admission No'),
                   ),
                   TextFormField(
                     controller: name,
-                    decoration: InputDecoration(labelText: 'Name'),
+                    decoration: const InputDecoration(labelText: 'Name'),
                   ),
                   TextFormField(
                     controller: course,
-                    decoration: InputDecoration(labelText: 'Course'),
+                    decoration: const InputDecoration(labelText: 'Course'),
                   ),
                   TextButton(
                       onPressed: () {
-                        addStudent();
-                        Navigator.pop(context);
+                        BlocProvider.of<StudenttBloc>(context).add(AddEvent(
+                            name: name.text,
+                            addmissionNo: addno.text,
+                            course: course.text,
+                            whoAdd: LoginForm.logindUser.userName));
                       },
-                      child: Text("add"))
+                      child: const Text("add"))
                 ],
               ))
             ],

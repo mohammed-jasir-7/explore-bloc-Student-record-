@@ -1,4 +1,4 @@
-import 'package:week_5/Model/users.dart';
+import '../data/Model/users.dart';
 
 class DBFunctions {
   List<Users> usersLists = [];

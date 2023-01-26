@@ -1,14 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:week_5/Database/student_db_function.dart';
-import 'package:week_5/Model/students.dart';
-import 'package:week_5/Screens/Home/home_screen.dart';
-import 'package:week_5/Screens/Login/widget/loginForm.dart';
-import 'package:week_5/Screens/student/widget/student_details.dart';
+
+import '../../../business_logic/blocs/bloc/student_bloc.dart';
+import '../../../data/Model/students.dart';
+import '../Home/home_screen.dart';
+import '../Login/widget/loginForm.dart';
+import 'widget/student_details.dart';
 
 class StudentDetails extends StatelessWidget {
   StudentDetails({super.key, required this.detail});
@@ -27,20 +32,13 @@ class StudentDetails extends StatelessWidget {
             width: double.infinity,
             child: Column(
               children: [
-                ValueListenableBuilder<Box<Student>>(
-                  valueListenable: Boxes.getdata().listenable(),
-                  builder: (context, value, child) {
-                    return Column(
-                      children: [Detail(detail: detail)],
-                    );
-                  },
-                ),
+                // details here
+                Detail(detail: detail),
                 ElevatedButton(
                     onPressed: () {
-                      print(detail.key);
                       show(context);
                     },
-                    child: Text("edit")),
+                    child: const Text("edit")),
                 IconButton(
                     onPressed: () => Navigator.pushAndRemoveUntil(
                         context,
@@ -49,7 +47,7 @@ class StudentDetails extends StatelessWidget {
                               username: LoginForm.logindUser.userName),
                         ),
                         (route) => false),
-                    icon: Icon(Icons.home))
+                    icon: const Icon(Icons.home))
               ],
             ),
           ),
@@ -70,7 +68,7 @@ class StudentDetails extends StatelessWidget {
             height: 300,
             child: Column(
               children: [
-                Text("Edit"),
+                const Text("Edit"),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: TextFormField(
@@ -79,13 +77,13 @@ class StudentDetails extends StatelessWidget {
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(35),
-                            borderSide: BorderSide(color: Colors.black)),
+                            borderSide: const BorderSide(color: Colors.black)),
                         border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.black, width: 3),
+                                const BorderSide(color: Colors.black, width: 3),
                             borderRadius: BorderRadius.circular(30)),
                         hintText: "name",
-                        hintStyle: TextStyle(color: Colors.black)),
+                        hintStyle: const TextStyle(color: Colors.black)),
                   ),
                 ),
                 Padding(
@@ -96,13 +94,13 @@ class StudentDetails extends StatelessWidget {
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(35),
-                            borderSide: BorderSide(color: Colors.black)),
+                            borderSide: const BorderSide(color: Colors.black)),
                         border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.black, width: 3),
+                                const BorderSide(color: Colors.black, width: 3),
                             borderRadius: BorderRadius.circular(30)),
                         hintText: "Admission No",
-                        hintStyle: TextStyle(color: Colors.black)),
+                        hintStyle: const TextStyle(color: Colors.black)),
                   ),
                 ),
                 Padding(
@@ -113,21 +111,27 @@ class StudentDetails extends StatelessWidget {
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(35),
-                            borderSide: BorderSide(color: Colors.black)),
+                            borderSide: const BorderSide(color: Colors.black)),
                         border: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.black, width: 3),
+                                const BorderSide(color: Colors.black, width: 3),
                             borderRadius: BorderRadius.circular(30)),
                         hintText: "course",
-                        hintStyle: TextStyle(color: Colors.black)),
+                        hintStyle: const TextStyle(color: Colors.black)),
                   ),
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      edit();
+                      BlocProvider.of<StudenttBloc>(context).add(EditEvent(
+                          id: detail.id,
+                          name: name.text,
+                          index: detail.key,
+                          addmissionNo: addno.text,
+                          course: course.text,
+                          whoAdd: detail.whoAdd));
                       Navigator.pop(ctx);
                     },
-                    child: Text("updte"))
+                    child: const Text("update"))
               ],
             ),
           ),
@@ -136,10 +140,10 @@ class StudentDetails extends StatelessWidget {
     );
   }
 
-  Future edit() async {
-    detail.name = name.text;
-    detail.addmissionNumber = addno.text;
-    detail.course = course.text;
-    detail.save();
-  }
+  // Future edit() async {
+  //   detail.name = name.text;
+  //   detail.addmissionNumber = addno.text;
+  //   detail.course = course.text;
+  //   detail.save();
+  // }
 }

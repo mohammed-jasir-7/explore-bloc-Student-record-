@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:week_5/Screens/Login/widget/loginForm.dart';
+
+import '../../Login/widget/loginForm.dart';
 
 class DrawerSide extends StatelessWidget {
   const DrawerSide({super.key});
@@ -12,7 +12,7 @@ class DrawerSide extends StatelessWidget {
     return SafeArea(
       child: Container(
         width: 200,
-        color: Color.fromARGB(255, 57, 57, 57),
+        color: const Color.fromARGB(255, 57, 57, 57),
         child: Column(
           children: [
             Container(
@@ -30,7 +30,7 @@ class DrawerSide extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
             ),
-            Divider(
+            const Divider(
               color: Colors.white,
             ),
             GestureDetector(
@@ -43,7 +43,7 @@ class DrawerSide extends StatelessWidget {
                     (route) => false);
               },
               child: ListTile(
-                leading: Icon(
+                leading: const Icon(
                   Icons.logout,
                   color: Colors.white,
                 ),
@@ -57,7 +57,7 @@ class DrawerSide extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(
+              leading: const Icon(
                 Icons.settings,
                 color: Colors.white,
               ),

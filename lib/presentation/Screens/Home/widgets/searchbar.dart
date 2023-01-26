@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:week_5/Database/student_db_function.dart';
-import 'package:week_5/Model/students.dart';
-import 'package:week_5/Screens/Home/widgets/bodylist.dart';
+import 'package:week_5/business_logic/blocs/bloc/student_bloc.dart';
+
+import '../../../../data/Model/students.dart';
 
 class Searchbar extends StatefulWidget {
-  Searchbar({super.key});
+  const Searchbar({super.key});
   static ValueNotifier<List<Student>> st = ValueNotifier([]);
 
   @override
@@ -25,36 +25,35 @@ class _SearchbarState extends State<Searchbar> {
         borderRadius: BorderRadius.circular(30),
         child: Container(
           color: Colors.white,
+          width: 200,
+          height: 10,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: TextField(
               style: GoogleFonts.montserrat(fontSize: 15),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: "search",
                   suffixIcon: Icon(Icons.search),
                   border: InputBorder.none),
               controller: searchKey,
               onChanged: (value) {
-                searchStudent(value);
+                BlocProvider.of<StudenttBloc>(context)
+                    .add(SearchEvent(query: value));
               },
             ),
           ),
-          width: 200,
-          height: 10,
         ),
       ),
     );
   }
 
-  searchStudent(value) {
-    final box = Boxes.getdata();
+  // searchStudent(value) {
+  //   final box = Boxes.getdata();
 
-    var jk =
-        box.values.where((element) => element.name.contains(searchKey.text));
-    setState(() {
-      Searchbar.st.value = jk.toList();
-    });
-
-    print("ttttt");
-  }
+  //   var jk =
+  //       box.values.where((element) => element.name.contains(searchKey.text));
+  //   setState(() {
+  //     Searchbar.st.value = jk.toList();
+  //   });
+  // }
 }
